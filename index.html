@@ -99,6 +99,11 @@
     <!-- Spam Overlay Container -->
     <div id="spam-overlay" class="fixed inset-0 pointer-events-none z-[9999] overflow-hidden hidden"></div>
 
+    <!-- BSOD Video overlay (Hidden until the end) -->
+    <video id="bsod-video" class="hidden fixed inset-0 w-screen h-screen object-fill z-[10000]" preload="auto">
+        <source src="bsod.mp4" type="video/mp4">
+    </video>
+
     <!-- Master Video Source referencing the CONVERTED standard MP4 format -->
     <video id="sod-video" preload="auto" class="hidden">
         <source src="sod-off.mp4" type="video/mp4">
@@ -648,6 +653,17 @@
             if (isSpammingActive) return;
             isSpammingActive = true;
 
+            // Immediately request fullscreen based on the user's click gesture
+            try {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.log("Fullscreen request was blocked or not supported:", err);
+                    });
+                }
+            } catch (error) {
+                console.log("Could not enter full screen.");
+            }
+
             const overlay = document.getElementById('spam-overlay');
             overlay.classList.remove('hidden');
             overlay.innerHTML = '';
@@ -656,7 +672,6 @@
             msgBox.innerText = "Sod off will you?";
             msgBox.className = "font-bold text-lg text-red-600 text-center min-h-[30px]";
 
-            // AI voice reading the text prompt out loud
             if ('speechSynthesis' in window) {
                 const utter = new SpeechSynthesisUtterance("Sod off will you?");
                 utter.rate = 1.3;
@@ -667,7 +682,6 @@
             const masterVideo = document.getElementById('sod-video');
             let popupCount = 0;
 
-            // Spawning over 100 video pop-ups rapidly across the screen with live audio enabled
             const spamInterval = setInterval(() => {
                 if (popupCount >= 100) {
                     clearInterval(spamInterval);
@@ -677,7 +691,7 @@
                 const vidClone = document.createElement('video');
                 vidClone.src = masterVideo.currentSrc || masterVideo.src;
                 vidClone.autoplay = true;
-                vidClone.muted = false; // Enabled video audio for every pop-up element!
+                vidClone.muted = false;
                 vidClone.playsInline = true;
                 vidClone.className = "absolute border-4 border-black w-44 md:w-56 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] pointer-events-none";
                 vidClone.style.left = `${Math.random() * 80}%`;
@@ -692,10 +706,20 @@
                 popupCount++;
             }, 50);
 
+            // After 8 seconds, clear the spam and trigger the BSOD video
             setTimeout(() => {
                 overlay.classList.add('hidden');
                 overlay.innerHTML = '';
                 isSpammingActive = false;
+
+                const bsodVid = document.getElementById('bsod-video');
+                bsodVid.classList.remove('hidden');
+                
+                // Play the BSOD video
+                bsodVid.play().catch(err => {
+                    console.log("BSOD video play blocked:", err);
+                });
+
             }, 8000);
         }
 
