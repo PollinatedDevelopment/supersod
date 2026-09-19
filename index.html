@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super-Sod Co. | Premium Turf & Grass Solutions</title>
+    <title>Super-Sod Co. | Premium Turf, Solutions, 100 Trials & Sod-oku</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -30,6 +30,8 @@
             transition: all 0.1s ease-in-out;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: black;
+            cursor: pointer;
         }
         .comic-btn:hover {
             background-color: #facc15;
@@ -40,13 +42,73 @@
             transform: translate(4px, 4px);
             box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
         }
+        .stat-bar-container {
+            border: 4px solid black;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #fff;
+            height: 28px;
+            box-shadow: inset 3px 3px 0px rgba(0,0,0,0.2);
+        }
+        .stat-bar {
+            height: 100%;
+            transition: width 0.3s ease-out;
+        }
+        .speech-bubble {
+            position: relative;
+            background: white;
+            border-radius: 12px;
+            border: 5px solid black;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.1);
+        }
+        .emoji-scene {
+            font-size: 4rem;
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+            line-height: 1.2;
+            background-image: repeating-linear-gradient(45deg, #fef08a 0, #fef08a 10px, #fde047 10px, #fde047 20px);
+        }
+        #choices-container.locked {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        /* Sod-oku Grid Specific Styles */
+        .sodoku-cell {
+            width: 45px;
+            height: 45px;
+            border: 2px solid black;
+            text-align: center;
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            background-color: #ffffff;
+            outline: none;
+        }
+        .sodoku-cell:focus {
+            background-color: #fef08a;
+        }
+        .sodoku-cell:read-only {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
     </style>
 </head>
-<body class="flex flex-col min-h-screen text-slate-800">
+<body class="flex flex-col min-h-screen text-slate-800 relative">
+
+    <!-- Spam Overlay Container -->
+    <div id="spam-overlay" class="fixed inset-0 pointer-events-none z-[9999] overflow-hidden hidden"></div>
+
+    <!-- Hidden Master Video Source for Sod Off Meme -->
+    <video id="sod-video" preload="auto" class="hidden">
+        <source src="copy_F8FF2F06-4D24-4478-9315-33297AE33BB5.mov" type="video/quicktime">
+        <source src="copy_F8FF2F06-4D24-4478-9315-33297AE33BB5.mov" type="video/mp4">
+    </video>
 
     <!-- Header / Navigation -->
     <header class="bg-emerald-600 border-b-4 border-black py-4 px-6 sticky top-0 z-50 shadow-md">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <div class="max-w-6xl mx-auto flex justify-between items-center flex-wrap gap-4">
             <div class="flex items-center gap-2">
                 <span class="text-3xl">🌱</span>
                 <h1 class="text-3xl md:text-4xl text-yellow-300 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">SUPER-SOD CO.</h1>
@@ -54,6 +116,8 @@
             <nav class="hidden md:flex gap-6 font-bold text-lg text-white">
                 <a href="#products" class="hover:text-yellow-200 transition">Products</a>
                 <a href="#calculator" class="hover:text-yellow-200 transition">Yard Calculator</a>
+                <a href="#campaign-section" class="hover:text-yellow-200 transition">100 Trials</a>
+                <a href="#sodoku-section" class="hover:text-yellow-200 transition">Sod-oku</a>
                 <a href="#about" class="hover:text-yellow-200 transition">Why Us</a>
                 <a href="#contact" class="hover:text-yellow-200 transition">Contact</a>
             </nav>
@@ -66,9 +130,9 @@
         <div class="comic-panel p-8 bg-white flex flex-col gap-4">
             <h2 class="text-4xl md:text-5xl text-emerald-600 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">INSTANT GREEN. ZERO HASSLE.</h2>
             <p class="text-lg font-bold text-gray-700">Tired of patchy dirt and HOA warning letters? Transform your wasteland into an emerald masterpiece in less than 24 hours with our farm-fresh premium turf rolls!</p>
-            <div class="flex gap-4 mt-2">
+            <div class="flex gap-4 mt-2 flex-wrap">
                 <a href="#products" class="comic-btn px-6 py-3 text-xl text-black text-center flex-1">Shop Turf</a>
-                <a href="#calculator" class="comic-btn bg-emerald-400 px-6 py-3 text-xl text-black text-center flex-1">Calculate Yards</a>
+                <a href="#sodoku-section" class="comic-btn px-6 py-3 text-xl text-black text-center flex-1">Play Sod-oku</a>
             </div>
         </div>
         <div class="comic-panel p-4 bg-yellow-100 flex justify-center items-center h-80 text-center relative overflow-hidden">
@@ -160,20 +224,112 @@
         </div>
     </section>
 
+    <!-- Integrated Campaign Section (Super-Sod: 100 Handcrafted Trials Game) -->
+    <section id="campaign-section" class="py-12 px-6 max-w-4xl mx-auto w-full flex flex-col items-center">
+        <div class="text-center mb-8">
+            <h2 class="text-4xl md:text-5xl text-emerald-700 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">THE 100 TRIALS CAMPAIGN</h2>
+            <p class="text-lg font-bold text-gray-600 mt-2">Can you survive all 100 turf challenges without angering the HOA?</p>
+        </div>
+
+        <!-- Main Menu for Mini-Game -->
+        <div id="game-main-menu" class="w-full max-w-3xl flex flex-col gap-6 text-center">
+            <div class="comic-panel p-6 bg-white border-8">
+                <h3 class="text-4xl md:text-5xl mb-2 text-black uppercase" style="-webkit-text-stroke: 2px white; text-shadow: 4px 4px 0px black;">
+                    <span class="text-green-500">SUPER-SOD:</span><br>100 CUSTOM CHAPTERS
+                </h3>
+                <p class="text-xl font-bold mb-2 text-red-600">⚠️ 100 UNIQUE THEMED TRIALS</p>
+                <p class="text-md font-bold mb-6 text-gray-700">Every single chapter features custom-tailored yellow buttons for its unique problem: 1 guaranteed pass, 1 fifty-fifty coinflip, and 1 instant fail. Button positions randomize randomly!</p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="startCampaign()" class="comic-btn p-4 flex-1 text-2xl">🌱 Start Campaign</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campaign Container (Hidden by default) -->
+        <div id="campaign-container" class="w-full max-w-3xl flex-col gap-6 hidden">
+            <div class="flex justify-between items-center">
+                <button onclick="returnToMenu()" class="comic-btn bg-gray-300 text-sm px-4 py-2">⬅ Main Menu</button>
+                <span class="font-bold text-lg bg-white px-3 py-1 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">Chapter: <span id="chapter-indicator">1/100</span></span>
+            </div>
+
+            <div class="comic-panel p-4 bg-white border-4">
+                <h3 class="text-2xl md:text-3xl text-center mb-3 text-black uppercase" style="-webkit-text-stroke: 1px white; text-shadow: 2px 2px 0px black;">
+                    <span class="text-green-500">SUPER-SOD:</span> TURF CAMPAIGN
+                </h3>
+                
+                <div class="flex flex-col md:flex-row gap-4 justify-between items-center bg-gray-100 p-4 border-4 border-black">
+                    <div class="w-full">
+                        <div class="flex justify-between font-bold mb-1 text-base">
+                            <span>🌱 Lawn Health</span>
+                            <span id="lawn-health-text">30%</span>
+                        </div>
+                        <div class="stat-bar-container">
+                            <div id="lawn-health-bar" class="stat-bar bg-green-500" style="width: 30%;"></div>
+                        </div>
+                    </div>
+                    <div class="w-full">
+                        <div class="flex justify-between font-bold mb-1 text-base">
+                            <span>😠 HOA Wrath</span>
+                            <span id="hoa-threat-text">85%</span>
+                        </div>
+                        <div class="stat-bar-container">
+                            <div id="hoa-threat-bar" class="stat-bar bg-red-500" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comic-panel p-6 flex flex-col items-center text-center bg-white" id="story-panel">
+                <div id="scene-image" class="emoji-scene mb-6 flex gap-4 justify-center items-center h-32 w-full border-4 border-black border-dashed">
+                    🏚️ 📜 😠
+                </div>
+                <div id="scene-text" class="speech-bubble w-full text-left leading-relaxed">
+                    Loading stage...
+                </div>
+            </div>
+
+            <div id="choices-container" class="flex flex-col gap-4"></div>
+        </div>
+    </section>
+
+    <!-- Integrated Sod-oku Game Section -->
+    <section id="sodoku-section" class="py-12 px-6 max-w-4xl mx-auto w-full flex flex-col items-center">
+        <div class="text-center mb-8">
+            <h2 class="text-4xl md:text-5xl text-emerald-700 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">SOD-OKU LAWN PUZZLE</h2>
+            <p class="text-lg font-bold text-gray-600 mt-2">Fill the 4x4 garden grid so numbers 1 through 4 appear in every row, column, and 2x2 sector!</p>
+        </div>
+
+        <div class="comic-panel p-6 bg-white flex flex-col items-center gap-6 max-w-md w-full">
+            <div id="sodoku-grid" class="grid grid-cols-4 gap-2 bg-emerald-100 p-4 border-4 border-black">
+                <!-- 4x4 Sod-oku grid generated via script -->
+            </div>
+            
+            <div id="sodoku-message" class="font-bold text-lg text-emerald-700 text-center min-h-[30px]">
+                Arrange the turf sectors (1-4)!
+            </div>
+
+            <div class="flex gap-4 w-full">
+                <button onclick="checkSodoku()" class="comic-btn flex-1 py-3 text-lg">Verify Grid</button>
+                <button onclick="resetSodoku()" class="comic-btn bg-red-200 flex-1 py-3 text-lg">Reset Puzzle</button>
+            </div>
+        </div>
+    </section>
+
     <!-- Why Us Section -->
     <section id="about" class="py-12 px-6 max-w-6xl mx-auto w-full">
         <div class="comic-panel p-8 bg-emerald-500 text-white border-black">
             <h2 class="text-3xl md:text-4xl text-center mb-6 text-yellow-300 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">WHY SUPER-SOD CO.?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-900">
-                <div class="bg-white p-6 border-4 border-black rounded">
+                <div class="bg-white p-6 border-4 border-black rounded shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <h3 class="text-xl text-emerald-600 mb-2">🚜 Farm Fresh Cut</h3>
                     <p class="font-bold text-sm">Harvested the exact morning of delivery so roots stay plump and ready to grip your soil instantly.</p>
                 </div>
-                <div class="bg-white p-6 border-4 border-black rounded">
+                <div class="bg-white p-6 border-4 border-black rounded shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <h3 class="text-xl text-emerald-600 mb-2">🛡️ HOA Defense Shield</h3>
                     <p class="font-bold text-sm">Our lush emerald density immediately neutralizes nagging neighbor complaints and warning citations.</p>
                 </div>
-                <div class="bg-white p-6 border-4 border-black rounded">
+                <div class="bg-white p-6 border-4 border-black rounded shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <h3 class="text-xl text-emerald-600 mb-2">⚡ Rapid Pallet Drop</h3>
                     <p class="font-bold text-sm">Fast, forklift-assisted curbside delivery straight to your driveway right when you need it.</p>
                 </div>
@@ -207,7 +363,9 @@
         <p>&copy; 2026 Super-Sod Co. All rights reserved. Say NO to dead dirt!</p>
     </footer>
 
+    <!-- Scripts for Calculator, 100 Trials Mini-Game, and Sod-oku Puzzle -->
     <script>
+        // Calculator Logic
         function calculateCost() {
             const sqft = parseFloat(document.getElementById('sqft-input').value);
             const rate = parseFloat(document.getElementById('turf-type').value);
@@ -226,6 +384,407 @@
             resultBox.classList.remove('hidden');
             resultBox.innerHTML = `🌿 Estimated Turf Cost: $${subtotal.toFixed(2)} + $75.00 Delivery = <span class="text-emerald-700">$${total.toFixed(2)}</span> total!`;
         }
+
+        // Audio Context for Mini-Games
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            let now = audioCtx.currentTime;
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                osc.start(now); osc.stop(now + 0.08);
+            } else if (type === 'success') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.setValueAtTime(500, now + 0.1);
+                osc.frequency.setValueAtTime(700, now + 0.2);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now); osc.stop(now + 0.4);
+            } else if (type === 'fail') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.setValueAtTime(100, now + 0.15);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                osc.start(now); osc.stop(now + 0.35);
+            } else if (type === 'spam') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(80, now);
+                osc.frequency.setValueAtTime(50, now + 0.2);
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now); osc.stop(now + 0.3);
+            }
+        }
+
+        // 100 Trials Campaign Game Logic
+        function returnToMenu() {
+            playSound('click');
+            document.getElementById('game-main-menu').classList.remove('hidden');
+            document.getElementById('game-main-menu').classList.add('flex');
+            document.getElementById('campaign-container').classList.add('hidden');
+            document.getElementById('campaign-container').classList.remove('flex');
+        }
+
+        function startCampaign() {
+            playSound('click');
+            document.getElementById('game-main-menu').classList.remove('flex');
+            document.getElementById('game-main-menu').classList.add('hidden');
+            document.getElementById('campaign-container').classList.remove('hidden');
+            document.getElementById('campaign-container').classList.add('flex');
+            campaignState = { lawnHealth: 30, hoaThreat: 85, currentChapter: 1 };
+            updateCampaignUI();
+        }
+
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        let campaignState = { lawnHealth: 30, hoaThreat: 85, currentChapter: 1 };
+        let lastClickTime = 0;
+        let isLocked = false;
+        const clamp = (num) => Math.min(Math.max(num, 0), 100);
+
+        const database100 = [];
+        const chapterTemplates = [
+            { emoji: '🏚️ 📜 😠', title: 'Karen issues an initial warning citation regarding property lines.', safeTxt: 'File formal counter-permit paperwork', fiftyTxt: 'Argue property boundaries with Karen', failTxt: 'Tear up front lawn notice in anger' },
+            { emoji: '🐛 🌱 🔍', title: 'Army cutworms infiltrate your topsoil root system layers.', safeTxt: 'Apply targeted organic neem oil defense', fiftyTxt: 'Flood the lawn sectors with cold water', failTxt: 'Set fire to the grass to burn bugs' },
+            { emoji: '☀️ 🔥 🏜️', title: 'A sudden flash heatwave bakes the green blades under direct sun.', safeTxt: 'Activate deep overnight drip irrigation', fiftyTxt: 'Throw shade tarps over random spots', failTxt: 'Spray boiling water to cool ground' },
+            { emoji: '🐕 🐾 🚧', title: 'Neighborhood dogs dig messy tactical holes across your turf.', safeTxt: 'Install discreet perimeter sonic repellers', fiftyTxt: 'Chase the dogs away with a broom', failTxt: 'Invite stray packs onto the porch' },
+            { emoji: '🚐 📺 🔌', title: 'Liam the TV Man strings heavy coaxial cables across your grass.', safeTxt: 'Carefully lift lines onto pole hooks', fiftyTxt: 'Tug aggressively on the cable wire', failTxt: 'Slice right through the live cables' },
+            { emoji: '🌧️ 💧 🌊', title: 'Torrential downpours threaten to flood your root bed.', safeTxt: 'Dig emergency runoff drainage trenches', fiftyTxt: 'Try to brush away puddles with a rake', failTxt: 'Plug up your storm drain outlets' },
+            { emoji: '🚜 🏗️ ⚠️', title: 'Utility work crews park heavy excavators directly on your apron.', safeTxt: 'Negotiate polite relocation with foreman', fiftyTxt: 'Honk car horn at the excavator crew', failTxt: 'Slash the heavy tractor tires' },
+            { emoji: '🐜 🌾 🛑', title: 'Fire ant colonies build massive mounds near your front porch.', safeTxt: 'Apply professional citrus-extract bait', fiftyTxt: 'Stomp on the mounds with heavy boots', failTxt: 'Pour honey all over the ant nests' },
+            { emoji: '🛹 🧒 💥', title: 'Local kids use your manicured lawn edge as a skateboard ramp.', safeTxt: 'Build a wooden border fence barrier', fiftyTxt: 'Yell at the kids from your window', failTxt: 'Grease up the sidewalk with oil' },
+            { emoji: '🍂 🌬️ 🌪️', title: 'High autumn gales dump neighbor lawn waste onto your grass.', safeTxt: 'Rake and compost the debris neatly', fiftyTxt: 'Blow leaves back with a leaf blower', failTxt: 'Set the pile ablaze on the turf' }
+        ];
+
+        for (let i = 1; i <= 100; i++) {
+            if (i === 100) {
+                database100[i] = {
+                    emoji: '☢️ 🌋 👑',
+                    text: '<strong>CHAPTER 100: THE FINAL WASTELAND BOSS.</strong> Karen stands over a crater of dead earth in mecha-armor.',
+                    options: [
+                        { text: 'Deploy Super-Sod Ultimate Mega-Bloom protocol', type: 'safe', next: 'win' },
+                        { text: 'Launch experimental discount fertilizer strike', type: 'fifty', next: 100 },
+                        { text: 'Surrender property keys directly to Karen', type: 'fail', next: 'lose' }
+                    ]
+                };
+            } else {
+                const t = chapterTemplates[(i - 1) % chapterTemplates.length];
+                database100[i] = {
+                    emoji: t.emoji,
+                    text: `<strong>Chapter ${i}/100:</strong> ${t.title}`,
+                    options: [
+                        { text: t.safeTxt, type: 'safe', next: i + 1 },
+                        { text: t.fiftyTxt, type: 'fifty', next: i + 1 },
+                        { text: t.failTxt, type: 'fail', next: 'lose' }
+                    ]
+                };
+            }
+        }
+
+        function getChapterData(ch) {
+            if (ch === 'win') {
+                return {
+                    emoji: '🏆 🌿 🌟',
+                    text: '<strong>LEGENDARY VICTORY!</strong> You survived all 100 handcrafted trials. Karen\'s mecha-suit shorted out from your pure turf power!',
+                    options: [{ text: 'Play Campaign Again', type: 'safe', reset: true }]
+                };
+            }
+            if (ch === 'lose') {
+                return {
+                    emoji: '💀 🌪️ 📉',
+                    text: '<strong>CAMPAIGN DEFEAT.</strong> Your lawn health dropped to zero or HOA threat maxed out. The wasteland claims your yard.',
+                    options: [{ text: 'Try Campaign Again', type: 'safe', reset: true }]
+                };
+            }
+            return database100[ch] || database100[1];
+        }
+
+        function updateCampaignUI() {
+            if (campaignState.lawnHealth <= 0 || campaignState.hoaThreat >= 100) {
+                campaignState.currentChapter = 'lose';
+            }
+
+            const data = getChapterData(campaignState.currentChapter);
+            
+            document.getElementById('chapter-indicator').innerText = typeof campaignState.currentChapter === 'number' ? `${campaignState.currentChapter}/100` : campaignState.currentChapter.toUpperCase();
+            document.getElementById('lawn-health-bar').style.width = `${campaignState.lawnHealth}%`;
+            document.getElementById('lawn-health-text').innerText = `${campaignState.lawnHealth}%`;
+            document.getElementById('hoa-threat-bar').style.width = `${campaignState.hoaThreat}%`;
+            document.getElementById('hoa-threat-text').innerText = `${campaignState.hoaThreat}%`;
+
+            document.getElementById('lawn-health-bar').className = `stat-bar ${campaignState.lawnHealth > 30 ? 'bg-green-500' : 'bg-red-500'}`;
+            document.getElementById('hoa-threat-bar').className = `stat-bar ${campaignState.hoaThreat > 70 ? 'bg-red-600' : 'bg-green-400'}`;
+
+            document.getElementById('scene-image').innerText = data.emoji;
+            document.getElementById('scene-text').innerHTML = data.text;
+
+            const container = document.getElementById('choices-container');
+            container.innerHTML = '';
+
+            let shuffledOptions = [...data.options];
+            if (shuffledOptions.length > 1) {
+                shuffledOptions = shuffleArray(shuffledOptions);
+            }
+
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = `comic-btn w-full p-4 text-xl sm:text-2xl cursor-pointer`;
+                btn.innerHTML = opt.text;
+                
+                btn.onclick = () => {
+                    const now = Date.now();
+                    if (now - lastClickTime < 400) {
+                        playSound('spam');
+                        isLocked = true;
+                        container.classList.add('locked');
+                        
+                        document.getElementById('scene-text').innerHTML = "<strong>⚠️ ANTI-SPAM LOCKDOWN!</strong> Button-mashing penalty triggered! Karen fined you -25 Lawn Health!";
+                        
+                        campaignState.lawnHealth = clamp(campaignState.lawnHealth - 25);
+                        
+                        setTimeout(() => {
+                            isLocked = false;
+                            container.classList.remove('locked');
+                            updateCampaignUI();
+                        }, 1200);
+                        
+                        lastClickTime = now;
+                        return;
+                    }
+
+                    if (isLocked) return;
+                    lastClickTime = now;
+                    playSound('click');
+
+                    if (opt.reset) {
+                        startCampaign();
+                        return;
+                    }
+
+                    if (opt.type === 'safe') {
+                        playSound('success');
+                        campaignState.lawnHealth = clamp(campaignState.lawnHealth + 8);
+                        campaignState.hoaThreat = clamp(campaignState.hoaThreat - 6);
+                        campaignState.currentChapter = opt.next;
+                        updateCampaignUI();
+                    } 
+                    else if (opt.type === 'fifty') {
+                        const coinFlip = Math.random() < 0.5;
+                        if (coinFlip) {
+                            playSound('success');
+                            document.getElementById('scene-text').innerHTML = "<strong>✨ COINFLIP SUCCESS!</strong> Your gamble miraculously paid off without major damage!";
+                            campaignState.lawnHealth = clamp(campaignState.lawnHealth + 4);
+                            campaignState.hoaThreat = clamp(campaignState.hoaThreat - 3);
+                        } else {
+                            playSound('fail');
+                            document.getElementById('scene-text').innerHTML = "<strong>💥 COINFLIP FAILURE!</strong> Your gamble backfired completely, tearing up the turf!";
+                            campaignState.lawnHealth = clamp(campaignState.lawnHealth - 30);
+                            campaignState.hoaThreat = clamp(campaignState.hoaThreat + 20);
+                        }
+                        
+                        isLocked = true;
+                        container.classList.add('locked');
+                        setTimeout(() => {
+                            isLocked = false;
+                            container.classList.remove('locked');
+                            if (campaignState.lawnHealth <= 0 || campaignState.hoaThreat >= 100) {
+                                campaignState.currentChapter = 'lose';
+                            } else {
+                                campaignState.currentChapter = opt.next;
+                            }
+                            updateCampaignUI();
+                        }, 1500);
+                    } 
+                    else if (opt.type === 'fail' || opt.next === 'lose') {
+                        playSound('fail');
+                        campaignState.currentChapter = 'lose';
+                        updateCampaignUI();
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Sod-oku 4x4 Puzzle Logic & Spam Trigger (Text says AI Voice, Popups play Video with Audio)
+        const sodokuInitialPuzzle = [
+            [1, 0, 0, 4],
+            [0, 0, 2, 0],
+            [0, 3, 0, 0],
+            [2, 0, 0, 1]
+        ];
+
+        function initSodoku() {
+            const gridContainer = document.getElementById('sodoku-grid');
+            gridContainer.innerHTML = '';
+            
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.className = 'sodoku-cell';
+                    input.dataset.row = r;
+                    input.dataset.col = c;
+
+                    const val = sodokuInitialPuzzle[r][c];
+                    if (val !== 0) {
+                        input.value = val;
+                        input.readOnly = true;
+                    } else {
+                        input.value = '';
+                        input.oninput = (e) => {
+                            const val = e.target.value;
+                            if (!/^[1-4]?$/.test(val)) {
+                                e.target.value = '';
+                            } else if (val) {
+                                playSound('click');
+                            }
+                        };
+                    }
+                    gridContainer.appendChild(input);
+                }
+            }
+            document.getElementById('sodoku-message').innerText = "Arrange the turf sectors (1-4)!";
+        }
+
+        let isSpammingActive = false;
+
+        function triggerSodOffSpam() {
+            if (isSpammingActive) return;
+            isSpammingActive = true;
+
+            const overlay = document.getElementById('spam-overlay');
+            overlay.classList.remove('hidden');
+            overlay.innerHTML = '';
+
+            const msgBox = document.getElementById('sodoku-message');
+            msgBox.innerText = "Sod off will you?";
+            msgBox.className = "font-bold text-lg text-red-600 text-center min-h-[30px]";
+
+            // AI voice reading the exact phrase as requested
+            if ('speechSynthesis' in window) {
+                const utter = new SpeechSynthesisUtterance("Sod off will you?");
+                utter.rate = 1.2;
+                utter.pitch = 0.9;
+                window.speechSynthesis.speak(utter);
+            }
+
+            const masterVideo = document.getElementById('sod-video');
+
+            // Spawn floating video popups with unmuted audio playing instantly
+            const spamInterval = setInterval(() => {
+                const vidClone = document.createElement('video');
+                vidClone.src = masterVideo.currentSrc || masterVideo.src;
+                vidClone.autoplay = true;
+                vidClone.muted = false; // Enabled video audio for every pop-up element!
+                vidClone.playsInline = true;
+                vidClone.className = "absolute border-4 border-black w-56 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] pointer-events-none";
+                vidClone.style.left = `${Math.random() * 65}%`;
+                vidClone.style.top = `${Math.random() * 65}%`;
+                vidClone.style.transform = `rotate(${Math.floor(Math.random() * 40) - 20}deg)`;
+                
+                overlay.appendChild(vidClone);
+                vidClone.play().catch(err => {
+                    console.log("Autoplay blocked for clone:", err);
+                });
+
+                if (overlay.children.length > 25) {
+                    overlay.removeChild(overlay.firstChild);
+                }
+            }, 250);
+
+            // Stop spam after 5 seconds
+            setTimeout(() => {
+                clearInterval(spamInterval);
+                overlay.classList.add('hidden');
+                overlay.innerHTML = '';
+                isSpammingActive = false;
+            }, 5000);
+        }
+
+        function checkSodoku() {
+            playSound('click');
+            const cells = document.querySelectorAll('.sodoku-cell');
+            let board = Array(4).fill(0).map(() => Array(4).fill(0));
+            let isComplete = true;
+
+            cells.forEach(cell => {
+                const r = parseInt(cell.dataset.row);
+                const c = parseInt(cell.dataset.col);
+                const val = parseInt(cell.value);
+                if (!val || val < 1 || val > 4) {
+                    isComplete = false;
+                }
+                board[r][c] = val || 0;
+            });
+
+            const msgBox = document.getElementById('sodoku-message');
+
+            if (!isComplete) {
+                playSound('fail');
+                triggerSodOffSpam();
+                return;
+            }
+
+            let isValid = true;
+            for (let i = 0; i < 4; i++) {
+                let rowSet = new Set();
+                let colSet = new Set();
+                for (let j = 0; j < 4; j++) {
+                    rowSet.add(board[i][j]);
+                    colSet.add(board[j][i]);
+                }
+                if (rowSet.size !== 4 || colSet.size !== 4) isValid = false;
+            }
+
+            for (let br = 0; br < 4; br += 2) {
+                for (let bc = 0; bc < 4; bc += 2) {
+                    let boxSet = new Set();
+                    for (let r = 0; r < 2; r++) {
+                        for (let c = 0; c < 2; c++) {
+                            boxSet.add(board[br + r][bc + c]);
+                        }
+                    }
+                    if (boxSet.size !== 4) isValid = false;
+                }
+            }
+
+            if (isValid) {
+                playSound('success');
+                msgBox.innerText = "🌟 AMAZING! Sod-oku solved perfectly! Your yard layout is immaculate.";
+                msgBox.className = "font-bold text-lg text-emerald-700 text-center min-h-[30px]";
+            } else {
+                playSound('fail');
+                triggerSodOffSpam();
+            }
+        }
+
+        function resetSodoku() {
+            playSound('click');
+            initSodoku();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initSodoku();
+        });
     </script>
 </body>
 </html>
