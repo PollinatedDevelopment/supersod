@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super-Sod Co. | Premium Turf & Grass Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0fdf4;
+            font-family: 'Comic Neue', cursive;
+        }
+        h1, h2, h3, .comic-title {
+            font-family: 'Bangers', cursive;
+            letter-spacing: 1.5px;
+        }
+        .comic-panel {
+            background-color: white;
+            border: 4px solid black;
+            border-radius: 4px;
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+        }
+        .comic-btn {
+            font-family: 'Bangers', cursive;
+            background-color: #fde047;
+            border: 3px solid black;
+            border-radius: 4px;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+            transition: all 0.1s ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .comic-btn:hover {
+            background-color: #facc15;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+        }
+        .comic-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-800">
+
+    <!-- Header / Navigation -->
+    <header class="bg-emerald-600 border-b-4 border-black py-4 px-6 sticky top-0 z-50 shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-3xl">🌱</span>
+                <h1 class="text-3xl md:text-4xl text-yellow-300 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">SUPER-SOD CO.</h1>
+            </div>
+            <nav class="hidden md:flex gap-6 font-bold text-lg text-white">
+                <a href="#products" class="hover:text-yellow-200 transition">Products</a>
+                <a href="#calculator" class="hover:text-yellow-200 transition">Yard Calculator</a>
+                <a href="#about" class="hover:text-yellow-200 transition">Why Us</a>
+                <a href="#contact" class="hover:text-yellow-200 transition">Contact</a>
+            </nav>
+            <a href="#calculator" class="comic-btn px-4 py-2 text-lg text-black">Get Quote</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-12 px-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-8">
+        <div class="comic-panel p-8 bg-white flex flex-col gap-4">
+            <h2 class="text-4xl md:text-5xl text-emerald-600 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">INSTANT GREEN. ZERO HASSLE.</h2>
+            <p class="text-lg font-bold text-gray-700">Tired of patchy dirt and HOA warning letters? Transform your wasteland into an emerald masterpiece in less than 24 hours with our farm-fresh premium turf rolls!</p>
+            <div class="flex gap-4 mt-2">
+                <a href="#products" class="comic-btn px-6 py-3 text-xl text-black text-center flex-1">Shop Turf</a>
+                <a href="#calculator" class="comic-btn bg-emerald-400 px-6 py-3 text-xl text-black text-center flex-1">Calculate Yards</a>
+            </div>
+        </div>
+        <div class="comic-panel p-4 bg-yellow-100 flex justify-center items-center h-80 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(#22c55e_2px,transparent_2px)] [background-size:16px_16px] opacity-30"></div>
+            <div class="z-10 flex flex-col items-center">
+                <span class="text-8xl mb-2">🏡✨</span>
+                <span class="comic-title text-2xl text-emerald-700 bg-white px-4 py-1 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">GUARANTEED HOA APPROVED!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-12 px-6 max-w-6xl mx-auto w-full">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl md:text-5xl text-emerald-700 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">CHOOSE YOUR TURF WEAPON</h2>
+            <p class="text-lg font-bold text-gray-600 mt-2">Grown with love, harvested fresh, and ready to roll out.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <div class="comic-panel p-6 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="text-5xl text-center mb-4 bg-green-100 py-6 border-2 border-black">🌿</div>
+                    <h3 class="text-2xl text-emerald-600 mb-2">Bermuda Bullet</h3>
+                    <p class="font-bold text-gray-600 text-sm mb-4">Ultra-durable, traffic-resistant, and thrives in scorching heat. Perfect for kids, pets, and backyard sports.</p>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-4 font-bold text-lg">
+                        <span>Price:</span>
+                        <span class="text-emerald-700">$0.45 / sq.ft</span>
+                    </div>
+                    <button onclick="alert('Added Bermuda Bullet to your cart!')" class="comic-btn w-full py-2 text-lg">Add To Order</button>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="comic-panel p-6 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="text-5xl text-center mb-4 bg-emerald-100 py-6 border-2 border-black">🍀</div>
+                    <h3 class="text-2xl text-emerald-600 mb-2">Emerald Zoysia</h3>
+                    <p class="font-bold text-gray-600 text-sm mb-4">Luxurious dark-green carpet look with low water needs. The ultimate flex to make the neighbors jealous.</p>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-4 font-bold text-lg">
+                        <span>Price:</span>
+                        <span class="text-emerald-700">$0.65 / sq.ft</span>
+                    </div>
+                    <button onclick="alert('Added Emerald Zoysia to your cart!')" class="comic-btn w-full py-2 text-lg">Add To Order</button>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="comic-panel p-6 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="text-5xl text-center mb-4 bg-blue-100 py-6 border-2 border-black">🌾</div>
+                    <h3 class="text-2xl text-emerald-600 mb-2">Fescue Fortress</h3>
+                    <p class="font-bold text-gray-600 text-sm mb-4">Stays deep green all winter long. Highly resilient shade-tolerant grass built to withstand cold snaps.</p>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-4 font-bold text-lg">
+                        <span>Price:</span>
+                        <span class="text-emerald-700">$0.50 / sq.ft</span>
+                    </div>
+                    <button onclick="alert('Added Fescue Fortress to your cart!')" class="comic-btn w-full py-2 text-lg">Add To Order</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="py-12 px-6 max-w-4xl mx-auto w-full">
+        <div class="comic-panel p-8 bg-white">
+            <h2 class="text-3xl md:text-4xl text-center text-emerald-700 mb-6 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">YARD COST CALCULATOR</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label class="block font-bold mb-2 text-lg">Estimated Area (Square Feet):</label>
+                    <input type="number" id="sqft-input" placeholder="e.g. 1500" class="w-full p-3 border-4 border-black rounded font-bold text-lg focus:outline-none focus:bg-yellow-50">
+                </div>
+                <div>
+                    <label class="block font-bold mb-2 text-lg">Select Turf Type:</label>
+                    <select id="turf-type" class="w-full p-3 border-4 border-black rounded font-bold text-lg bg-white focus:outline-none">
+                        <option value="0.45">Bermuda Bullet ($0.45/sq.ft)</option>
+                        <option value="0.65">Emerald Zoysia ($0.65/sq.ft)</option>
+                        <option value="0.50">Fescue Fortress ($0.50/sq.ft)</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="calculateCost()" class="comic-btn w-full py-3 text-xl mb-6">Calculate Total Estimate</button>
+            <div id="calculator-result" class="hidden p-4 bg-emerald-100 border-4 border-black text-center font-bold text-xl">
+                <!-- Dynamic calculation result output -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="about" class="py-12 px-6 max-w-6xl mx-auto w-full">
+        <div class="comic-panel p-8 bg-emerald-500 text-white border-black">
+            <h2 class="text-3xl md:text-4xl text-center mb-6 text-yellow-300 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">WHY SUPER-SOD CO.?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-900">
+                <div class="bg-white p-6 border-4 border-black rounded">
+                    <h3 class="text-xl text-emerald-600 mb-2">🚜 Farm Fresh Cut</h3>
+                    <p class="font-bold text-sm">Harvested the exact morning of delivery so roots stay plump and ready to grip your soil instantly.</p>
+                </div>
+                <div class="bg-white p-6 border-4 border-black rounded">
+                    <h3 class="text-xl text-emerald-600 mb-2">🛡️ HOA Defense Shield</h3>
+                    <p class="font-bold text-sm">Our lush emerald density immediately neutralizes nagging neighbor complaints and warning citations.</p>
+                </div>
+                <div class="bg-white p-6 border-4 border-black rounded">
+                    <h3 class="text-xl text-emerald-600 mb-2">⚡ Rapid Pallet Drop</h3>
+                    <p class="font-bold text-sm">Fast, forklift-assisted curbside delivery straight to your driveway right when you need it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Order Section -->
+    <section id="contact" class="py-12 px-6 max-w-3xl mx-auto w-full mb-12">
+        <div class="comic-panel p-8 bg-white">
+            <h2 class="text-3xl md:text-4xl text-center text-emerald-700 mb-4 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">READY TO ORDER?</h2>
+            <p class="text-center font-bold text-gray-600 mb-6">Drop your details below and our turf specialists will call you back within 10 minutes!</p>
+            
+            <!-- Real Working Form using FormSubmit configured to send directly to pollinateddevelopment@gmail.com -->
+            <form action="https://formsubmit.co/pollinateddevelopment@gmail.com" method="POST" class="flex flex-col gap-4">
+                <!-- Hidden configurations to streamline submission experience -->
+                <input type="hidden" name="_subject" value="New Super-Sod Co. Turf Order / Inquiry!">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <input type="text" name="Name" placeholder="Your Name" required class="p-3 border-4 border-black rounded font-bold">
+                <input type="tel" name="Phone" placeholder="Phone Number" required class="p-3 border-4 border-black rounded font-bold">
+                <textarea name="Message_Or_Address" placeholder="Delivery Address & Notes" rows="3" required class="p-3 border-4 border-black rounded font-bold"></textarea>
+                
+                <button type="submit" class="comic-btn py-3 text-xl">Dispatch Turf Delivery</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-6 px-6 text-center font-bold mt-auto border-t-4 border-emerald-500">
+        <p>&copy; 2026 Super-Sod Co. All rights reserved. Say NO to dead dirt!</p>
+    </footer>
+
+    <script>
+        function calculateCost() {
+            const sqft = parseFloat(document.getElementById('sqft-input').value);
+            const rate = parseFloat(document.getElementById('turf-type').value);
+            const resultBox = document.getElementById('calculator-result');
+
+            if (!sqft || sqft <= 0) {
+                resultBox.classList.remove('hidden');
+                resultBox.innerHTML = "⚠️ Please enter a valid square footage number!";
+                return;
+            }
+
+            const subtotal = sqft * rate;
+            const delivery = 75.00;
+            const total = subtotal + delivery;
+
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = `🌿 Estimated Turf Cost: $${subtotal.toFixed(2)} + $75.00 Delivery = <span class="text-emerald-700">$${total.toFixed(2)}</span> total!`;
+        }
+    </script>
+</body>
+</html>
